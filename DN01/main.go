@@ -32,10 +32,23 @@ func main() {
 		},
 	}
 
+	fmt.Println("Začetno stanje:")
+	izpisRedovalnice(studenti)
+	fmt.Println()
+
 	fmt.Println("Dodajanje ocen:")
+	fmt.Println()
 	dodajOceno(studenti, "123", 5)
+	izpisRedovalnice(studenti)
+	fmt.Println()
+
 	dodajOceno(studenti, "123", 15)
+	izpisRedovalnice(studenti)
+	fmt.Println()
+
 	dodajOceno(studenti, "abc", 4)
+	izpisRedovalnice(studenti)
+	fmt.Println()
 }
 
 func dodajOceno(studenti map[string]Student, vpisnaStevilka string, ocena int) {
@@ -54,4 +67,12 @@ func dodajOceno(studenti map[string]Student, vpisnaStevilka string, ocena int) {
 	student.ocene = append(student.ocene, ocena)
 	studenti[vpisnaStevilka] = student
 	fmt.Printf("Ocena %d dodana študentu/ki %s\n", ocena, student)
+}
+
+func izpisRedovalnice(studenti map[string]Student) {
+	fmt.Println("REDOVALNICA:")
+	for vpisna, student := range studenti {
+		fmt.Printf("%s - %s: ", vpisna, student)
+		fmt.Println(student.ocene)
+	}
 }
