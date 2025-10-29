@@ -15,17 +15,17 @@ func (s Student) String() string {
 func main() {
 
 	studenti := map[string]Student{
-		"123": Student{
+		"123": {
 			ime:     "Franc",
 			priimek: "Horvat",
-			ocene:   []int{10, 9, 8, 7, 6},
+			ocene:   []int{10, 9, 10, 9, 10},
 		},
-		"456": Student{
+		"456": {
 			ime:     "Ana",
 			priimek: "Kovačič",
 			ocene:   []int{6, 7, 6, 7, 6},
 		},
-		"789": Student{
+		"789": {
 			ime:     "Janez",
 			priimek: "Novak",
 			ocene:   []int{4, 5, 6, 5, 4},
@@ -38,7 +38,7 @@ func main() {
 
 	fmt.Println("Dodajanje ocen:")
 	fmt.Println()
-	dodajOceno(studenti, "123", 5)
+	dodajOceno(studenti, "123", 8)
 	izpisRedovalnice(studenti)
 	fmt.Println()
 
@@ -53,16 +53,19 @@ func main() {
 	fmt.Println("Povprečje ocen:")
 	fmt.Println()
 	result := povprecje(studenti, "123")
-	fmt.Printf("Povprečje študenta 123: %.2f\n", result)
+	fmt.Printf("Povprečje študenta 123: %f\n", result)
 
 	result2 := povprecje(studenti, "456")
-	fmt.Printf("Povprečje študenta 456: %.2f\n", result2)
+	fmt.Printf("Povprečje študenta 456: %f\n", result2)
 
 	result3 := povprecje(studenti, "789")
-	fmt.Printf("Povprečje študenta 789: %.2f\n", result3)
+	fmt.Printf("Povprečje študenta 789: %f\n", result3)
 
 	result4 := povprecje(studenti, "abc")
-	fmt.Printf("Povprečje študenta abc: %.2f\n", result4)
+	fmt.Printf("Povprečje študenta abc: %f\n", result4)
+
+	fmt.Println()
+	izpisiKoncniUspeh(studenti)
 }
 
 func dodajOceno(studenti map[string]Student, vpisnaStevilka string, ocena int) {
@@ -109,4 +112,22 @@ func povprecje(studenti map[string]Student, vpisnaStevilka string) float64 {
 		return 0
 	}
 	return avg
+}
+
+func izpisiKoncniUspeh(studenti map[string]Student) {
+	fmt.Println("KONČNI USPEH:")
+	for vpisna, student := range studenti {
+		studentAvg := povprecje(studenti, vpisna)
+
+		fmt.Printf("%s: povprečna ocena %.1f -> ", student, studentAvg)
+
+		switch {
+		case studentAvg >= 9:
+			fmt.Printf("Odličen študent!\n")
+		case studentAvg < 9 && studentAvg >= 6:
+			fmt.Printf("Povprečen študent\n")
+		case studentAvg < 6:
+			fmt.Printf("Neuspešen študent\n")
+		}
+	}
 }
