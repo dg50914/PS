@@ -18,17 +18,22 @@ func main() {
 		"123": {
 			ime:     "Franc",
 			priimek: "Horvat",
-			ocene:   []int{10, 9, 10, 9, 10},
+			ocene:   []int{10, 9, 10, 9, 10, 10, 9},
 		},
 		"456": {
 			ime:     "Ana",
 			priimek: "Kovačič",
-			ocene:   []int{6, 7, 6, 7, 6},
+			ocene:   []int{6, 7, 6, 7, 6, 7, 6, 7},
 		},
 		"789": {
 			ime:     "Janez",
 			priimek: "Novak",
-			ocene:   []int{4, 5, 6, 5, 4},
+			ocene:   []int{4, 5, 6, 5, 4, 5, 4, 5, 4},
+		},
+		"234": {
+			ime:     "Zdravo",
+			priimek: "Neocenjen",
+			ocene:   []int{7, 8, 9},
 		},
 	}
 
@@ -61,8 +66,11 @@ func main() {
 	result3 := povprecje(studenti, "789")
 	fmt.Printf("Povprečje študenta 789: %f\n", result3)
 
-	result4 := povprecje(studenti, "abc")
-	fmt.Printf("Povprečje študenta abc: %f\n", result4)
+	result4 := povprecje(studenti, "234")
+	fmt.Printf("Povprečje študenta 234: %f\n", result4)
+
+	result5 := povprecje(studenti, "abc")
+	fmt.Printf("Povprečje študenta abc: %f\n", result5)
 
 	fmt.Println()
 	izpisiKoncniUspeh(studenti)
@@ -97,8 +105,11 @@ func izpisRedovalnice(studenti map[string]Student) {
 func povprecje(studenti map[string]Student, vpisnaStevilka string) float64 {
 	student, ok := studenti[vpisnaStevilka]
 	if !ok {
-		fmt.Printf("Študent z vpisno številko %s ne obstaja\n", vpisnaStevilka)
 		return -1
+	}
+
+	if len(student.ocene) < 6 {
+		return 0
 	}
 
 	avg := 0.0
@@ -107,10 +118,6 @@ func povprecje(studenti map[string]Student, vpisnaStevilka string) float64 {
 	}
 
 	avg /= float64(len(student.ocene))
-
-	if avg < 6 {
-		return 0
-	}
 	return avg
 }
 
